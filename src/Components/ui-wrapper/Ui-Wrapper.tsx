@@ -10,9 +10,8 @@ type WrapperProps = {
 
 export const UiWrapper = ({ children }: WrapperProps) => {
   return (
-    <div className=" flex flex-col  min-h-dvh">
+    <div className=" flex flex-col h-dvh min-h-dvh overflow-y-auto">
       <Header />
-
       {children}
       <Footer />
     </div>

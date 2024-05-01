@@ -1,7 +1,7 @@
 export const Footer = () => {
   return (
-    <div className="flex flex-row mt-auto justify-evenly gap-3 px-10 py-3 text-black bg-gray-50">
-      <div className="flex flex-col text-center justify-center">
+    <div className="z-20 px-10 py-3 bg-gray-50 shadow-around flex flex-row mt-auto justify-evenly gap-3 ">
+      <div className="flex flex-col text-center justify-between">
         <h3 className="font-bold">{"Basic info"}</h3>
         <p>{"Name: Denys"}</p>
         <p>{"Surname: Miand"}</p>
@@ -16,7 +16,7 @@ export const Footer = () => {
           </a>
         </p>
       </div>
-      <div className="flex flex-col text-center justify-center max-w-40">
+      <div className="max-w-40 flex flex-col text-center justify-center ">
         <h3 className="font-bold">{"Tech stack"}</h3>
         <p>{"Next.Js, React, Tailwind, TypeScript, Axios, Graphql"}</p>
         <p>

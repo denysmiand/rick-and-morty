@@ -1,4 +1,4 @@
-import { UiWrapper } from "@/Components/Ui-Wrapper";
+import { UiWrapper } from "@/Components/ui-wrapper/Ui-Wrapper";
 
 export default function Characters() {
   return (
