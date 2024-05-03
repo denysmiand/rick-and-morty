@@ -1,9 +1,9 @@
 import { charactersLink, episodesLink, locationsLink } from "@/utils/constants";
 import { usePathname } from "next/navigation";
 
-const generateNavStyles = (path: string, link: string) => {
+const generateNavStyles = (path: string | null, link: string) => {
   return `${
-    path.includes(link) && "text-blue-600 border-b-2 border-blue-600"
+    path && path.includes(link) && "text-blue-600 border-b-2 border-blue-600"
   } px-5 py-3 mob:px-3 mob:py-1 `;
 };
 

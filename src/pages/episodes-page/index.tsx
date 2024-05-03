@@ -43,7 +43,7 @@ export const EpisodesPage = () => {
           closeModalEvent={handleCloseModal}
         />
       )}
-      <div className={`h-fit py-5 grid grid-cols-4 gap-4 mob:grid-cols-3`}>
+      <div className={`h-fit py-5 grid grid-cols-4 gap-4 mob:grid-cols-2`}>
         {data.map((episode) => (
           <SingleEpisode
             episode={episode}

@@ -1,6 +1,5 @@
 import { Character, Episode } from "@/utils/types";
 import CloseIcon from "@/assets/close-icon.svg";
-import Image from "next/image";
 import ImagePlaceholder from "@/assets/episode_placeholder.jpg";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -76,7 +75,7 @@ export const EpisodeModal = ({
           </p>
           <div className="relative grid grid-cols-3 gap-3">
             {charactersToShow.map((character) => (
-              <div className="w-full flex flex-col gap-2">
+              <div className="w-full flex flex-col gap-2" key={character.id}>
                 <img
                   width={"100%"}
                   src={character.image}

@@ -25,3 +25,25 @@ export type Character = {
 
 export type Gender = "Female" | "Male" | "Genderless" | "unknown";
 export type Status = "Alive" | "Dead" | "unknown";
+
+export type getLocationsResponse = {
+  locations: {
+    info: {
+      pages: number;
+    };
+    results: Location[];
+  };
+};
+
+export type Location = {
+  created: string;
+  dimension: string;
+  id: string | number;
+  name: string;
+  residents: {
+    id: string | number;
+    image: string;
+    name: string;
+  }[];
+  type: string;
+};

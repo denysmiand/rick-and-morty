@@ -42,7 +42,7 @@ export const CharactersPage = () => {
   return (
     <div className="px-[20%] mob:px-[5%] flex flex-col grow justify-between">
       <div className="py-[20px] flex flex-col gap-2">
-        <b>{"Search"}</b>
+        <b>{"Search by name"}</b>
 
         <input
           value={searchInput}
@@ -54,8 +54,8 @@ export const CharactersPage = () => {
 
         <b>{"Filters"}</b>
 
-        <div className="flex items-center">
-          <p className="font-bold mr-2">{"Status: "}</p>
+        <div className="flex items-center  flex-wrap gap-3">
+          <p className="font-bold">{"Status: "}</p>
           <Checkbox
             id="no-selected-status"
             name="None"
@@ -91,8 +91,8 @@ export const CharactersPage = () => {
           />
         </div>
 
-        <div className="flex items-center">
-          <p className="font-bold mr-2">{"Gender: "}</p>
+        <div className="flex items-center flex-wrap gap-3">
+          <p className="font-bold">{"Gender:"}</p>
           <Checkbox
             id="no-selected-gender"
             name="None"
@@ -144,7 +144,7 @@ export const CharactersPage = () => {
       {!data.length && (
         <p className="text-center text-[24px] font-bold">{"No Data"}</p>
       )}
-      <div className={`h-fit  py-5 grid grid-cols-4 gap-4 mob:grid-cols-3`}>
+      <div className={`h-fit  py-5 grid grid-cols-4 gap-4 mob:grid-cols-2`}>
         {data.map((character) => (
           <SingleCharacter character={character} key={character.id} />
         ))}
