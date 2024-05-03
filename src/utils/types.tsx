@@ -11,14 +11,17 @@ export type Episode = {
 export type Character = {
   created: string;
   episode: string[];
-  gender: "Male" | "Female";
+  gender: Gender;
   id: number;
   image: string;
   location: { name: string; url: string };
   name: string;
   origin: { name: string; url: string };
   species: string;
-  status: string;
+  status: Status;
   type: string;
   url: string;
 };
+
+export type Gender = "Female" | "Male" | "Genderless" | "unknown";
+export type Status = "Alive" | "Dead" | "unknown";

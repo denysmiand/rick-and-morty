@@ -3,8 +3,9 @@
 import { Episode } from "@/utils/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { SingleEpisode } from "./single-episode";
-import { EpisodeModal } from "./episode-modal";
+import { SingleEpisode } from "./components/single-episode";
+import { EpisodeModal } from "./components/episode-modal";
+import { Paginating } from "../../Components/paginating";
 
 export const EpisodesPage = () => {
   const [maxPages, setMaxPages] = useState(0);
@@ -35,16 +36,14 @@ export const EpisodesPage = () => {
   const pages = Array.from({ length: maxPages }, (_, index) => index);
 
   return (
-    <>
+    <div className="px-[20%] mob:px-[5%]">
       {selectedEpisode && (
         <EpisodeModal
           episode={selectedEpisode}
           closeModalEvent={handleCloseModal}
         />
       )}
-      <div
-        className={`h-fit px-[20%] py-5 grid grid-cols-4 gap-4 mob:px-[5%] mob:grid-cols-3`}
-      >
+      <div className={`h-fit py-5 grid grid-cols-4 gap-4 mob:grid-cols-3`}>
         {data.map((episode) => (
           <SingleEpisode
             episode={episode}
@@ -53,23 +52,13 @@ export const EpisodesPage = () => {
           />
         ))}
       </div>
-      {pages.length > 1 && (
-        <div className="px-[20%] py-5 flex flex-row  justify-end gap-3 mob:px-[5%]">
-          {pages.map((_, i) => (
-            <div
-              key={i}
-              className={`size-8 border-2 cursor-pointer flex flex-row items-center justify-center leading-none hover:bg-neutral-200  ${
-                i + 1 === page && "bg-neutral-300"
-              }`}
-              onClick={() => {
-                setPage(i + 1);
-              }}
-            >
-              <p>{i + 1}</p>
-            </div>
-          ))}
-        </div>
+      {maxPages > 1 && (
+        <Paginating
+          currentPage={page}
+          pagesQty={maxPages}
+          setPageEvent={setPage}
+        />
       )}
-    </>
+    </div>
   );
 };
