@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Paginating } from "../../Components/paginating";
+import { Paginating } from "../../components/paginating";
 import { SingleCharacter } from "./components/single-character";
 import { Character, Gender, Status } from "@/utils/types";
 import { Checkbox } from "./components/checkbox";

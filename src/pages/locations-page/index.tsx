@@ -1,6 +1,6 @@
 "use client";
 
-import { Paginating } from "@/Components/paginating";
+import { Paginating } from "@/components/paginating";
 import { useGetLocations } from "@/api/queries/getLocations";
 import { Location, getLocationsResponse } from "@/utils/types";
 import { ApolloError } from "@apollo/client";

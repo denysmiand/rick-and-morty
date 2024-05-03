@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { SingleEpisode } from "./components/single-episode";
 import { EpisodeModal } from "./components/episode-modal";
-import { Paginating } from "../../Components/paginating";
+import { Paginating } from "../../components/paginating";
 
 export const EpisodesPage = () => {
   const [maxPages, setMaxPages] = useState(0);
