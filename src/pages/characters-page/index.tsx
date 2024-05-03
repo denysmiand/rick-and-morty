@@ -1,43 +1,101 @@
 "use client";
 
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Paginating } from "../../components/paginating";
 import { SingleCharacter } from "./components/single-character";
-import { Character, Gender, Status } from "@/utils/types";
 import { Checkbox } from "./components/checkbox";
+import { useFetchCharacters } from "@/utils/useFetchCharacters";
 
 export const CharactersPage = () => {
-  const [maxPages, setMaxPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState<Character[]>([]);
-  const [searchInput, setSearchInput] = useState("");
-  const [genderToFind, setGenderToFind] = useState<null | Gender>(null);
-  const [statusToFind, setStatusToFind] = useState<null | Status>(null);
+  const {
+    data,
+    page,
+    setPage,
+    maxPages,
+    searchInput,
+    setSearchInput,
+    genderToFind,
+    setGenderToFind,
+    statusToFind,
+    setStatusToFind,
+  } = useFetchCharacters();
 
-  useEffect(() => {
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/character/?page=${page}${
-          searchInput ? "&name=" + searchInput : ""
-        }${genderToFind ? "&gender=" + genderToFind : ""}${
-          statusToFind ? "&status=" + statusToFind : ""
-        }`
-      )
-      .then((response) => {
-        setData(response.data.results);
-        setMaxPages(response.data.info.pages);
-      })
-      .catch((error) => {
-        setData([]);
-        setMaxPages(0);
-        console.log(error);
-      });
-  }, [page, searchInput, genderToFind, statusToFind]);
+  const statuses = [
+    {
+      id: "no-selected-status",
+      name: "None",
+      checked: !statusToFind,
+      onChange: () => {
+        setStatusToFind(null);
+      },
+    },
+    {
+      id: "status-alive",
+      name: "Alive",
+      checked: statusToFind === "Alive",
+      onChange: () => {
+        setStatusToFind(statusToFind === "Alive" ? null : "Alive");
+      },
+    },
+    {
+      id: "status-dead",
+      name: "Dead",
+      checked: statusToFind === "Dead",
+      onChange: () => {
+        setStatusToFind(statusToFind === "Dead" ? null : "Dead");
+      },
+    },
+    {
+      id: "status-unknown",
+      name: "Unknown",
+      checked: statusToFind === "unknown",
+      onChange: () => {
+        setStatusToFind(statusToFind === "unknown" ? null : "unknown");
+      },
+    },
+  ];
 
-  useEffect(() => {
-    setPage(1);
-  }, [searchInput, genderToFind, statusToFind]);
+  const genders = [
+    {
+      id: "no-selected-gender",
+      name: "None",
+      checked: !genderToFind,
+      onChange: () => {
+        setGenderToFind(null);
+      },
+    },
+    {
+      id: "gender-male",
+      name: "Male",
+      checked: genderToFind === "Male",
+      onChange: () => {
+        setGenderToFind(genderToFind === "Male" ? null : "Male");
+      },
+    },
+    {
+      id: "gender-female",
+      name: "Female",
+      checked: genderToFind === "Female",
+      onChange: () => {
+        setGenderToFind(genderToFind === "Female" ? null : "Female");
+      },
+    },
+    {
+      id: "gender-genderless",
+      name: "Genderless",
+      checked: genderToFind === "Genderless",
+      onChange: () => {
+        setGenderToFind(genderToFind === "Genderless" ? null : "Genderless");
+      },
+    },
+    {
+      id: "gender-unknown",
+      name: "Unknown",
+      checked: genderToFind === "unknown",
+      onChange: () => {
+        setGenderToFind(genderToFind === "unknown" ? null : "unknown");
+      },
+    },
+  ];
 
   return (
     <div className="px-[20%] mob:px-[5%] flex flex-col grow justify-between">
@@ -56,89 +114,29 @@ export const CharactersPage = () => {
 
         <div className="flex items-center  flex-wrap gap-3">
           <p className="font-bold">{"Status: "}</p>
-          <Checkbox
-            id="no-selected-status"
-            name="None"
-            checked={!statusToFind}
-            onChange={() => {
-              setStatusToFind(null);
-            }}
-          />
 
-          <Checkbox
-            id="status-alive"
-            name="Alive"
-            checked={statusToFind === "Alive"}
-            onChange={() => {
-              setStatusToFind(statusToFind === "Alive" ? null : "Alive");
-            }}
-          />
-          <Checkbox
-            id="status-dead"
-            name="Dead"
-            checked={statusToFind === "Dead"}
-            onChange={() => {
-              setStatusToFind(statusToFind === "Dead" ? null : "Dead");
-            }}
-          />
-          <Checkbox
-            id="status-unknown"
-            name="Unknown"
-            checked={statusToFind === "unknown"}
-            onChange={() => {
-              setStatusToFind(statusToFind === "unknown" ? null : "unknown");
-            }}
-          />
+          {statuses.map((status) => (
+            <Checkbox
+              key={status.id}
+              id={status.id}
+              name={status.name}
+              checked={status.checked}
+              onChange={status.onChange}
+            />
+          ))}
         </div>
 
         <div className="flex items-center flex-wrap gap-3">
           <p className="font-bold">{"Gender:"}</p>
-          <Checkbox
-            id="no-selected-gender"
-            name="None"
-            checked={!genderToFind}
-            onChange={() => {
-              setGenderToFind(null);
-            }}
-          />
-
-          <Checkbox
-            id="gender-male"
-            name="Male"
-            checked={genderToFind === "Male"}
-            onChange={() => {
-              setGenderToFind(genderToFind === "Male" ? null : "Male");
-            }}
-          />
-
-          <Checkbox
-            id="gender-female"
-            name="Female"
-            checked={genderToFind === "Female"}
-            onChange={() => {
-              setGenderToFind(genderToFind === "Female" ? null : "Female");
-            }}
-          />
-
-          <Checkbox
-            id="gender-genderless"
-            name="Genderless"
-            checked={genderToFind === "Genderless"}
-            onChange={() => {
-              setGenderToFind(
-                genderToFind === "Genderless" ? null : "Genderless"
-              );
-            }}
-          />
-
-          <Checkbox
-            id="gender-unknown"
-            name="Unknown"
-            checked={genderToFind === "unknown"}
-            onChange={() => {
-              setGenderToFind(genderToFind === "unknown" ? null : "unknown");
-            }}
-          />
+          {genders.map((gender) => (
+            <Checkbox
+              key={gender.id}
+              id={gender.id}
+              name={gender.name}
+              checked={gender.checked}
+              onChange={gender.onChange}
+            />
+          ))}
         </div>
       </div>
       {!data.length && (

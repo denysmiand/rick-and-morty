@@ -1,3 +1,5 @@
+import { PageButton } from "./page-button";
+
 type PaginatingProps = {
   currentPage: number;
   pagesQty: number;
@@ -11,58 +13,55 @@ export const Paginating = ({
 }: PaginatingProps) => {
   const pages = Array.from({ length: pagesQty }, (_, index) => index);
 
+  const isShowingFirsButton = currentPage > 3;
+  const isShowingLastButton = currentPage < pages.length - 2;
+  const isShowingThreeDots = currentPage > 4 || currentPage < pages.length - 3;
+
+  function generateThreeDots() {
+    return <p className="relative top-[10px]">{"..."}</p>;
+  }
+
   const generateClosestPages = () => {
-    {
-      return pages.map((page) => {
-        if (Math.abs(currentPage - (page + 1)) <= 2) {
-          return (
-            <div
-              key={page}
-              className={`size-8 border-2 cursor-pointer flex flex-row items-center justify-center leading-none hover:bg-neutral-200  ${
-                currentPage === page + 1 && "bg-neutral-300"
-              }`}
-              onClick={() => {
-                setPageEvent(page + 1);
-              }}
-            >
-              <p>{page + 1}</p>
-            </div>
-          );
-        }
-      });
-    }
+    return pages.map((page) => {
+      if (!(Math.abs(currentPage - (page + 1)) <= 2)) return;
+      return (
+        <PageButton
+          key={page}
+          page={page}
+          className={currentPage === page + 1 ? "bg-neutral-300" : ""}
+          onClick={() => {
+            setPageEvent(page + 1);
+          }}
+        />
+      );
+    });
   };
 
   return (
-    <div className="py-5 flex flex-row  justify-end gap-3">
-      {currentPage > 3 && (
+    <div className="py-5 flex flex-row  justify-end gap-3 mob:justify-center mob:gap-2">
+      {isShowingFirsButton && (
         <>
-          <div
-            className={`size-8 border-2 cursor-pointer flex flex-row items-center justify-center leading-none hover:bg-neutral-200  `}
+          <PageButton
+            page={0}
             onClick={() => {
               setPageEvent(1);
             }}
-          >
-            <p>{1}</p>
-          </div>
-          {currentPage > 4 && <p className="relative top-[10px]">{"..."}</p>}
+          />
+
+          {isShowingThreeDots && generateThreeDots()}
         </>
       )}
       {generateClosestPages()}
 
-      {currentPage < pages.length - 2 && (
+      {isShowingLastButton && (
         <>
-          {currentPage < pages.length - 3 && (
-            <p className="relative top-[10px]">{"..."}</p>
-          )}
-          <div
-            className={`size-8 border-2 cursor-pointer flex flex-row items-center justify-center leading-none hover:bg-neutral-200  `}
+          {isShowingThreeDots && generateThreeDots()}
+          <PageButton
+            page={pages.length - 1}
             onClick={() => {
               setPageEvent(pages.length);
             }}
-          >
-            <p>{pages.length}</p>
-          </div>
+          />
         </>
       )}
     </div>

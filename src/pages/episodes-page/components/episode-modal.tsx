@@ -1,8 +1,9 @@
-import { Character, Episode } from "@/utils/types";
+import { Episode } from "@/utils/types";
 import CloseIcon from "@/assets/close-icon.svg";
 import ImagePlaceholder from "@/assets/episode_placeholder.jpg";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useFetchCharactersById } from "@/utils/useFetchCharactersById";
+import { ModalCharacter } from "@/components/modal-character";
 
 type EpisodeModalProps = {
   episode: Episode;
@@ -13,29 +14,14 @@ export const EpisodeModal = ({
   episode,
   closeModalEvent,
 }: EpisodeModalProps) => {
+  const [isShowMore, setIsShowMore] = useState(false);
+
   const characterIds = episode.characters.map((char) => {
     const match = char.match(/\/(\d+)$/);
     return match ? match[1] : null;
   });
 
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [isShowMore, setIsShowMore] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/character/${characterIds}`
-      )
-      .then((response) => {
-        setCharacters(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // I thought of two ways of handling rendering of three characters and then rendering the rest of them:
-    // either requesting all characters of the episode at once, or requesting first three and then the rest later when load more button is clicked.
-    // After checking the response time, I've come to conclusion that there is no sense in splitting it into two separate requests as response time hasn't changed so I sticked with the first option.
-  }, []);
+  const { characters } = useFetchCharactersById(characterIds);
 
   const charactersToShow = isShowMore
     ? characters
@@ -75,17 +61,11 @@ export const EpisodeModal = ({
           </p>
           <div className="relative grid grid-cols-3 gap-3">
             {charactersToShow.map((character) => (
-              <div className="w-full flex flex-col gap-2" key={character.id}>
-                <img
-                  width={"100%"}
-                  src={character.image}
-                  alt={`${character.name}`}
-                />
-                <p>
-                  <b>{"Name: "}</b>
-                  {character.name}
-                </p>
-              </div>
+              <ModalCharacter
+                key={character.id}
+                name={character.name}
+                image={character.image}
+              />
             ))}
           </div>
         </div>

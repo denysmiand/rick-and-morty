@@ -3,6 +3,7 @@ import CloseIcon from "@/assets/close-icon.svg";
 import ImagePlaceholder from "@/assets/location_placeholder.png";
 import { useState } from "react";
 import { formatDate } from "@/utils/functions";
+import { ModalCharacter } from "@/components/modal-character";
 
 type LocationModalProps = {
   location: Location;
@@ -55,17 +56,11 @@ export const LocationModal = ({
           {!characters.length && <p className="">{"No residents found"}</p>}
           <div className="relative grid grid-cols-3 gap-3">
             {charactersToShow.map((character) => (
-              <div className="w-full flex flex-col gap-2" key={character.id}>
-                <img
-                  width={"100%"}
-                  src={character.image}
-                  alt={`${character.name}`}
-                />
-                <p>
-                  <b>{"Name: "}</b>
-                  {character.name}
-                </p>
-              </div>
+              <ModalCharacter
+                key={character.id}
+                image={character.image}
+                name={character.name}
+              />
             ))}
           </div>
         </div>

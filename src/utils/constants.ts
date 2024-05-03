@@ -1,3 +1,5 @@
-export const episodesLink = "/episodes";
-export const charactersLink = "/characters";
-export const locationsLink = "/locations";
+export const links = [
+  { name: "Episodes", link: "/episodes" },
+  { name: "Characters", link: "/characters" },
+  { name: "Locations", link: "/locations" },
+];
